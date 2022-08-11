@@ -1,7 +1,6 @@
 package com.hyfly.yui.spring;
 
 import com.alibaba.fastjson2.JSONObject;
-import com.hyfly.yui.spring.domain.TestUserPo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,6 +8,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+
+;
 
 @SpringBootTest
 class ApplicationTests {
@@ -46,7 +47,7 @@ class ApplicationTests {
 
         HttpEntity<String> entity = new HttpEntity<>(jsonData, httpHeaders);
 
-        String s = restTemplate.postForObject("http://192.168.0.102:18000/json", entity, String.class);
+        String s = restTemplate.postForObject("http://192.168.0.102:8080/json", entity, String.class);
         System.out.println(s);
     }
 
