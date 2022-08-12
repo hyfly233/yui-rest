@@ -1,19 +1,23 @@
 package com.hyfly.yui.spring.controller;
 
-import com.alibaba.fastjson2.JSON;
-import com.hyfly.yui.spring.domain.TestUserPo;
-import org.springframework.stereotype.Controller;
+import com.hyfly.yui.spring.service.TestService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class TestController {
+    @Autowired
+    private TestService testService;
 
-    @PostMapping("/json")
-    public void test(@RequestBody String jsonParam) {
+    @GetMapping("/testGet")
+    public String testGet() {
+        return testService.testGet();
+    }
 
-        TestUserPo po = JSON.parseObject(jsonParam, TestUserPo.class);
-        System.out.println(po);
-        System.out.println("123123");
+    @PostMapping("/testPost")
+    public String testPost() {
+        return testService.testPost();
     }
 }

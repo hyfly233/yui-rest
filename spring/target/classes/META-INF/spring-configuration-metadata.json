@@ -4,6 +4,11 @@
       "name": "okhttp.config",
       "type": "com.hyfly.yui.spring.config.OkHttpProperties",
       "sourceType": "com.hyfly.yui.spring.config.OkHttpProperties"
+    },
+    {
+      "name": "uri",
+      "type": "com.hyfly.yui.spring.config.UriConfig",
+      "sourceType": "com.hyfly.yui.spring.config.UriConfig"
     }
   ],
   "properties": [
@@ -72,6 +77,11 @@
       "type": "java.util.concurrent.TimeUnit",
       "description": "写超时时间单位",
       "sourceType": "com.hyfly.yui.spring.config.OkHttpProperties"
+    },
+    {
+      "name": "uri.name",
+      "type": "java.lang.String",
+      "sourceType": "com.hyfly.yui.spring.config.UriConfig"
     }
   ],
   "hints": []

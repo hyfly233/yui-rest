@@ -1,0 +1,8 @@
+test:
+  host: 127.0.0.1
+  port: 18000
+
+uri:
+  test:
+    get: /test/get/{userId}
+    post: /test/post/{userId}
