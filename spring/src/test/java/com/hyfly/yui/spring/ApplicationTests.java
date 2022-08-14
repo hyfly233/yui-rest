@@ -59,4 +59,9 @@ class ApplicationTests {
     void testGet() {
         testService.testGet();
     }
+
+    @Test
+    void testPost() {
+        testService.testPost();
+    }
 }

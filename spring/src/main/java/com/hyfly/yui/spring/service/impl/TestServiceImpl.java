@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -47,14 +48,18 @@ public class TestServiceImpl implements TestService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        List<MediaType> accept = headers.getAccept();
+        List<MediaType> accept = new ArrayList<>();
         accept.add(MediaType.APPLICATION_JSON);
         headers.setAccept(accept);
 
 
         String jsonString = rt.getForObject(url, String.class);
 
+        log.info("jsonString: {}", jsonString);
+
         TestUserPo userPo = JSONObject.parseObject(jsonString, TestUserPo.class);
+
+        log.info("userPo: {}", userPo);
 
         assert userPo != null;
         return userPo.toString();
@@ -65,6 +70,8 @@ public class TestServiceImpl implements TestService {
         String s = testPostUri.replace("{userId}", "hyfly");
 
         String url = "http://" + host + ":" + port + s;
+
+        log.info("url: {}", url);
 
         // 创建请求头
         HttpHeaders headers = new HttpHeaders();
@@ -85,9 +92,9 @@ public class TestServiceImpl implements TestService {
 
         String jsonString = rt.postForObject(url, entity, String.class);
 
-//        TestUserPo userPo = JSONObject.parseObject(jsonString, TestUserPo.class);
-//
-//        return userPo.toString();
+        log.info("jsonString: {}", jsonString);
+
+        TestPo userPo = JSONObject.parseObject(jsonString, TestPo.class);
 
         return jsonString;
     }
