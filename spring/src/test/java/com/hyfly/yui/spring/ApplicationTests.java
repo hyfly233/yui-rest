@@ -1,6 +1,7 @@
 package com.hyfly.yui.spring;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.hyfly.yui.spring.service.TestService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,9 @@ class ApplicationTests {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private TestService testService;
 
     @Test
     void contextLoads() {
@@ -51,4 +55,8 @@ class ApplicationTests {
         System.out.println(s);
     }
 
+    @Test
+    void testGet() {
+        testService.testGet();
+    }
 }

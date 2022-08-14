@@ -1,13 +1,21 @@
 package com.hyfly.yui.spring.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.hyfly.yui.spring.domain.TestPo;
 import com.hyfly.yui.spring.domain.TestUserPo;
 import com.hyfly.yui.spring.service.TestService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
+@Slf4j
 @Service
 public class TestServiceImpl implements TestService {
 
@@ -33,6 +41,17 @@ public class TestServiceImpl implements TestService {
 
         String url = "http://" + host + ":" + port + s;
 
+        log.info("url: {}", url);
+
+        // 创建请求头
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        List<MediaType> accept = headers.getAccept();
+        accept.add(MediaType.APPLICATION_JSON);
+        headers.setAccept(accept);
+
+
         String jsonString = rt.getForObject(url, String.class);
 
         TestUserPo userPo = JSONObject.parseObject(jsonString, TestUserPo.class);
@@ -43,6 +62,33 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public String testPost() {
-        return null;
+        String s = testPostUri.replace("{userId}", "hyfly");
+
+        String url = "http://" + host + ":" + port + s;
+
+        // 创建请求头
+        HttpHeaders headers = new HttpHeaders();
+        MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+        headers.setContentType(type);
+
+        // 创建请求体
+        TestPo po = new TestPo();
+        po.setId("hyfly");
+        po.setName("hyfly233");
+        po.setPassword("111111111112222222222222");
+
+        String jsonData = JSONObject.toJSONString(po);
+
+
+        HttpEntity<String> entity = new HttpEntity<>(jsonData, headers);
+
+
+        String jsonString = rt.postForObject(url, entity, String.class);
+
+//        TestUserPo userPo = JSONObject.parseObject(jsonString, TestUserPo.class);
+//
+//        return userPo.toString();
+
+        return jsonString;
     }
 }
