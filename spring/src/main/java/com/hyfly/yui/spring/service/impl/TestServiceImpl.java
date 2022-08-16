@@ -1,8 +1,9 @@
 package com.hyfly.yui.spring.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
+
 import com.hyfly.yui.spring.domain.TestPo;
-import com.hyfly.yui.spring.domain.TestUserPo;
+import com.hyfly.yui.spring.domain.response.WithListPo;
 import com.hyfly.yui.spring.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,17 +53,24 @@ public class TestServiceImpl implements TestService {
         accept.add(MediaType.APPLICATION_JSON);
         headers.setAccept(accept);
 
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        String jsonString = rt.getForObject(url, String.class);
+        String jsonString = rt.getForObject(url, String.class, entity);
 
         log.info("jsonString: {}", jsonString);
 
-        TestUserPo userPo = JSONObject.parseObject(jsonString, TestUserPo.class);
+//        TestUserPo userPo = JSONObject.parseObject(jsonString, TestUserPo.class);
+//
+//        log.info("userPo: {}", userPo);
+//
+//        assert userPo != null;
+//        return userPo.toString();
 
-        log.info("userPo: {}", userPo);
+        WithListPo withListPo = JSONObject.parseObject(jsonString, WithListPo.class);
 
-        assert userPo != null;
-        return userPo.toString();
+        log.info("withListPo: {}", withListPo);
+
+        return "";
     }
 
     @Override

@@ -1,6 +1,6 @@
 test:
   host: 127.0.0.1
-  port: 18000
+  port: 23300
 
 uri:
   test:
