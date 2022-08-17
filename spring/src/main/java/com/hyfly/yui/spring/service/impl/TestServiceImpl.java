@@ -2,6 +2,7 @@ package com.hyfly.yui.spring.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
 
+import com.hyfly.yui.spring.annotation.CheckParam;
 import com.hyfly.yui.spring.domain.TestPo;
 import com.hyfly.yui.spring.domain.response.WithListPo;
 import com.hyfly.yui.spring.service.TestService;
@@ -35,6 +36,12 @@ public class TestServiceImpl implements TestService {
 
     @Autowired
     private RestTemplate rt;
+
+    @CheckParam("参数不能为空")
+    @Override
+    public String test2(String name, String age) {
+        return "test2" + name + age;
+    }
 
     @Override
     public String testGet() {
