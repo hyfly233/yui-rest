@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 @Data
 @Builder
 @ToString
-public class CheckParamPo {
+public class SpringValidationPo {
 
     @NotBlank
     String name;

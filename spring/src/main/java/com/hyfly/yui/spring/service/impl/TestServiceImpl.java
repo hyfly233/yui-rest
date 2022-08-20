@@ -37,16 +37,10 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private RestTemplate rt;
 
-    @CheckParam("参数不能为空")
-    @Override
-    public String checkParam(String name, String age) {
-        return "test2" + name + age;
-    }
-
     @CheckParam
     @Override
-    public String checkParam(CheckParamPo po) {
-        return null;
+    public String checkParam(@CheckParam CheckParamPo po) {
+        return po.toString();
     }
 
     @Override
