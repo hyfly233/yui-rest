@@ -1,6 +1,7 @@
 package com.hyfly.yui.spring;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.hyfly.yui.spring.domain.CheckParamPo;
 import com.hyfly.yui.spring.service.TestService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
-
-;
 
 @SpringBootTest
 class ApplicationTests {
@@ -63,5 +62,15 @@ class ApplicationTests {
     @Test
     void testPost() {
         testService.testPost();
+    }
+
+    @Test
+    void checkParam() {
+        CheckParamPo po = CheckParamPo.builder()
+//                .name("testName")
+//                .age(20)
+                .build();
+        String s = testService.checkParam(po);
+        System.out.println(s);
     }
 }

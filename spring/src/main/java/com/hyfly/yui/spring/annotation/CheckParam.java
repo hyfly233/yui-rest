@@ -9,7 +9,6 @@ import java.lang.annotation.Target;
  * @author hyfly
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.METHOD)
+@Target({ElementType.METHOD, ElementType.PARAMETER})
 public @interface CheckParam {
-    String value() default "";
 }

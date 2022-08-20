@@ -1,12 +1,15 @@
 package com.hyfly.yui.spring.service;
 
-import com.hyfly.yui.spring.annotation.CheckParam;
+import com.hyfly.yui.spring.domain.CheckParamPo;
 
 public interface TestService {
-    @CheckParam("参数不能为空")
-    String test2(String name, String age);
+
+    String checkParam(String name, String age);
+
+    String checkParam(CheckParamPo po);
 
     String testGet();
 
     String testPost();
+
 }
