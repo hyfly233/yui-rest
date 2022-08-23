@@ -13,6 +13,12 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.List;
 
 /**
@@ -40,13 +46,44 @@ public class RestTemplateConfig {
     }
 
     private OkHttpClient okHttpConfigClient() {
-        return new OkHttpClient().newBuilder()
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder()
                 .connectionPool(okHttpClientPool())
                 .connectTimeout(okHttpProperties.getConnectTimeout(), okHttpProperties.getConnectTimeoutTimeUnit())
                 .readTimeout(okHttpProperties.getReadTimeout(), okHttpProperties.getReadTimeoutTimeUnit())
                 .writeTimeout(okHttpProperties.getWriteTimeout(), okHttpProperties.getWriteTimeoutTimeUnit())
-                .hostnameVerifier((hostname, session) -> true)
-                .build();
+                .hostnameVerifier((hostname, session) -> true);
+
+        // https
+        X509TrustManager trustManager;
+        SSLContext sslContext;
+
+        try {
+            trustManager = new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {
+
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+            };
+            sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, new TrustManager[]{trustManager}, new SecureRandom());
+
+            return builder.sslSocketFactory(sslContext.getSocketFactory(), trustManager)
+                    .build();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return builder.build();
     }
 
     private ConnectionPool okHttpClientPool() {
